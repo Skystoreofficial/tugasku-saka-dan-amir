@@ -1,1 +1,6 @@
-<!doctype html><html lang="id"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Tugasku</title></head><body><div id="root"></div><script type="module" src="/src/main.tsx"></script></body></html>
+<!doctype html><html lang="id"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Tugasku</title></head><body><div id="root"></div>
+<script>
+  function showErr(m){var r=document.getElementById("root");if(r&&!r.children.length)r.innerHTML='<div style="font-family:sans-serif;padding:24px;max-width:520px;margin:auto"><h2>Tugasku gagal dimuat</h2><p style="color:#b91c1c">'+String(m).replace(/</g,"&lt;")+'</p><p>Periksa file .env (VITE_SUPABASE_URL harus diawali https://, lalu restart npm run dev).</p></div>';}
+  window.addEventListener("error",function(e){showErr(e.message)});
+  window.addEventListener("unhandledrejection",function(e){showErr(e.reason&&e.reason.message||e.reason)});
+</script><script type="module" src="/src/main.tsx"></script></body></html>

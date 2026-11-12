@@ -18,3 +18,45 @@ aside button:hover,aside button.on{background:#eef2ff;color:var(--p)}main{paddin
 .toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#16a34a;color:#fff;padding:10px 16px;border-radius:8px;z-index:9}.toast.bad{background:#dc2626}
 @media(max-width:720px){.shell{grid-template-columns:1fr}aside{position:fixed;bottom:0;left:0;right:0;flex-direction:row;justify-content:space-around;padding:6px;z-index:5;border-top:1px solid var(--bd);border-right:0}
 aside h1{display:none}aside button{flex-direction:column;gap:2px;font-size:11px}main{padding:12px 12px 90px}.two3{grid-template-columns:1fr}}
+
+/* ===== Halaman login ===== */
+.lg-page{min-height:100vh;min-height:100dvh;display:grid;grid-template-columns:1fr;background:#fff}
+.lg-panel{display:grid;place-items:center;padding:24px 20px}
+.lg-form{width:100%;max-width:380px;display:grid;gap:18px}
+.lg-logo{font-weight:800;font-size:20px;letter-spacing:-.01em;color:var(--p)}
+.lg-head{display:grid;gap:6px}.lg-head h1{font-size:30px;line-height:1.1;letter-spacing:-.02em}
+.lg-field{display:grid;gap:6px}.lg-field label{font-size:14px;font-weight:600}
+.lg-field input{height:44px;padding:0 12px;border-radius:10px;transition:border-color .15s,box-shadow .15s}
+.lg-field input:focus-visible{outline:none;border-color:var(--p);box-shadow:0 0 0 3px #4f46e533}
+.lg-field input[aria-invalid="true"]{border-color:#dc2626}
+.lg-pass{position:relative}.lg-pass input{padding-right:46px}
+.lg-eye{position:absolute;top:0;right:0;height:44px;width:44px;display:grid;place-items:center;border:0;background:none;color:var(--mu);border-radius:10px;cursor:pointer}
+.lg-eye:hover{color:#111827}.lg-eye:focus-visible,.lg-submit:focus-visible{outline:2px solid var(--p);outline-offset:2px}
+.lg-err{display:flex;gap:8px;align-items:flex-start;padding:10px 12px;border:1px solid #fecaca;background:#fef2f2;color:#b91c1c;border-radius:10px;font-size:14px;line-height:1.4}
+.lg-err svg{flex:none;margin-top:2px}
+.lg-submit{height:46px;width:100%;font-weight:600;border-radius:10px}
+.lg-help{font-size:13px;line-height:1.5}
+.lg-spin{animation:lg-spin .8s linear infinite}
+@keyframes lg-spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.lg-spin{animation:none}}
+
+/* panel kiri: kertas buku tulis (hanya tampil di layar lebar) */
+.lg-brand{display:none}
+@media(min-width:900px){
+  .lg-page{grid-template-columns:minmax(380px,1.05fr) 1fr}
+  .lg-logo-mobile{display:none}
+  .lg-brand{position:relative;display:flex;flex-direction:column;justify-content:space-between;gap:32px;padding:40px 48px 40px 88px;color:#fff;overflow:hidden;
+    background:repeating-linear-gradient(to bottom,transparent 0 35px,#ffffff14 35px 36px),#3730a3}
+  .lg-brand::before{content:"";position:absolute;top:0;bottom:0;left:64px;width:1px;background:#fda4af80}
+  .lg-brand .lg-logo{color:#fff}
+  .lg-paper{background:#fff;color:#111827;border-radius:14px;padding:20px;max-width:380px;box-shadow:0 20px 40px #1e1b4b55;transform:rotate(-1.5deg)}
+  .lg-paper-title{font-weight:700;margin-bottom:12px}
+  .lg-paper ul{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+  .lg-paper li{display:flex;gap:12px;align-items:center}
+  .lg-tick{flex:none;width:20px;height:20px;border-radius:50%;border:2px solid #c7d2fe;display:grid;place-items:center;color:#fff}
+  .lg-paper li.done .lg-tick{background:var(--p);border-color:var(--p)}
+  .lg-task{display:grid;gap:1px;min-width:0}.lg-task b{font-weight:600;font-size:14px}.lg-task small{color:var(--mu);font-size:12px}
+  .lg-paper li.done .lg-task b{text-decoration:line-through;color:var(--mu);font-weight:500}
+  .lg-tag{font-size:28px;line-height:1.2;font-weight:700;letter-spacing:-.02em;max-width:16ch}
+  .lg-panel{padding:48px}
+}
