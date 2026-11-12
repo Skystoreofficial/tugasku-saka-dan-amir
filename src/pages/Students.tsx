@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { supabase, Profile } from "../lib/supabase";
 export default function Students({ toast }: { toast: (m: string, ok?: boolean) => void }) {
   const [list, setList] = useState<Profile[]>([]); const [f, setF] = useState({ full_name: "", username: "", password: "" }); const [busy, setBusy] = useState(false);
@@ -9,7 +9,7 @@ export default function Students({ toast }: { toast: (m: string, ok?: boolean) =
     setBusy(false); if (error || data?.error) { toast(data?.error ?? "Gagal", false); return false; }
     toast(ok); load(); return true;
   }
-  async function create(e: React.FormEvent) { e.preventDefault(); if (await call({ action: "create", ...f }, "Akun siswa dibuat")) setF({ full_name: "", username: "", password: "" }); }
+  async function create(e: FormEvent) { e.preventDefault(); if (await call({ action: "create", ...f }, "Akun siswa dibuat")) setF({ full_name: "", username: "", password: "" }); }
   return (<div className="stack">
     <form className="card stack" onSubmit={create}><h3>Buat Akun Siswa</h3>
       <input placeholder="Nama lengkap" value={f.full_name} onChange={e => setF({ ...f, full_name: e.target.value })} required />

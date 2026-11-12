@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { supabase } from "../lib/supabase";
 export default function Login() {
   const [u, setU] = useState(""); const [p, setP] = useState(""); const [err, setErr] = useState(""); const [busy, setBusy] = useState(false);
-  async function go(e: React.FormEvent) {
+  async function go(e: FormEvent) {
     e.preventDefault(); setBusy(true); setErr("");
     const { error } = await supabase.auth.signInWithPassword({ email: `${u.trim().toLowerCase()}@tugasku.app`, password: p });
     if (error) setErr("Username atau password salah."); setBusy(false);

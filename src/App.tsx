@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { LayoutDashboard, ClipboardList, Users, LogOut } from "lucide-react";
-import { supabase, Profile } from "./lib/supabase";
+import { supabase, configOk, Profile } from "./lib/supabase";
 import Login from "./pages/Login"; import Dashboard from "./pages/Dashboard"; import Tasks from "./pages/Tasks"; import Students from "./pages/Students";
 export default function App() {
   const [me, setMe] = useState<Profile | null>(null); const [ready, setReady] = useState(false); const [tab, setTab] = useState("dash");
@@ -9,12 +9,15 @@ export default function App() {
   useEffect(() => {
     const load = async (uid?: string) => {
       if (!uid) { setMe(null); setReady(true); return; }
-      const { data } = await supabase.from("profiles").select("*").eq("id", uid).single(); setMe(data as Profile | null); setReady(true);
+      try { const { data } = await supabase.from("profiles").select("*").eq("id", uid).single(); setMe(data as Profile | null); } catch { setMe(null); }
+      setReady(true);
     };
-    supabase.auth.getSession().then(({ data }) => load(data.session?.user.id));
+    if (!configOk) { setReady(true); return; }
+    supabase.auth.getSession().then(({ data }) => load(data.session?.user.id)).catch(() => setReady(true));
     const { data: sub } = supabase.auth.onAuthStateChange((_e, s) => { setTimeout(() => load(s?.user.id), 0); });
     return () => sub.subscription.unsubscribe();
   }, []);
+  if (!configOk) return <div className="center"><div className="card login"><h1>Tugasku</h1><p className="err">Konfigurasi Supabase belum diisi.</p><p className="muted">Isi VITE_SUPABASE_URL dan VITE_SUPABASE_ANON_KEY (file .env atau Environment Variables Vercel), lalu build/redeploy ulang.</p></div></div>;
   if (!ready) return <div className="center">Memuat...</div>;
   if (!me) return <Login />;
   const teacher = me.role === "guru";

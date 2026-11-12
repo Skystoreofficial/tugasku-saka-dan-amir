@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState, type FormEvent, type ChangeEvent } from "react";
 import { Camera, ImagePlus, Trash2, Pencil, X } from "lucide-react";
 import { supabase, SUBJECTS, Profile, Task } from "../lib/supabase";
 type Toast = (m: string, ok?: boolean) => void;
@@ -31,10 +31,10 @@ export default function Tasks({ me, toast }: { me: Profile; toast: Toast }) {
     (t.title.toLowerCase().includes(q.toLowerCase()) || (teacher && (t.profiles?.full_name ?? "").toLowerCase().includes(q.toLowerCase()))))
     .sort((a, b) => (order === "desc" ? -1 : 1) * (a.task_date.localeCompare(b.task_date) || a.created_at.localeCompare(b.created_at))), [tasks, q, subj, order]);
 
-  function pick(e: React.ChangeEvent<HTMLInputElement>) { setFiles(p => [...p, ...Array.from(e.target.files ?? [])]); e.target.value = ""; }
+  function pick(e: ChangeEvent<HTMLInputElement>) { setFiles(p => [...p, ...Array.from(e.target.files ?? [])]); e.target.value = ""; }
   function reset() { setEditId(null); setFiles([]); setF({ title: "", subject: SUBJECTS[0], description: "", task_date: today() }); }
 
-  async function save(e: React.FormEvent) {
+  async function save(e: FormEvent) {
     e.preventDefault(); setBusy("Menyimpan...");
     try {
       let id = editId;
